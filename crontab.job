@@ -21,25 +21,21 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-# Generate landing pages
-#30 * * * * BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; bash update-pages.sh" && bash -l -c "cd /home/ubuntu/spase-generate-pages; bash push-pages.sh"
 # Refresh the landing pages at the bottom of every hour 
-30 * * * * BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; bash update-pages.sh; cp -r metadata.src/NASA /home/ubuntu; cp -r metadata.src/SMWG /home/ubuntu" && bash -l -c "cd /home/ubuntu/spase-generate-pages; venv/bin/python fixSchema_Org_Metadata.py /home/ubuntu/tmp/schemaOrg_Overrides.txt >> /home/ubuntu/tmp/cronjob.log 2>&1; bash push-pages.sh"
-# Every Sunday refresh the whole thing to delete old file names (2025/04/08 moving to prune_pages.php for this operation - do not reinstate)
-#5  0 * * 0 BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt /usr/bin/php /home/ubuntu/spase-generate-pages/clear_pagesDO_NOT_RUN.php
-10 0 * * Sun BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; bash generate-all-pages.sh; cp -r metadata.src/NASA /home/ubuntu; cp -r metadata.src/SMWG /home/ubuntu" && bash -l -c "cd /home/ubuntu/spase-generate-pages; bash push-pages.sh"
+30 * * * 1-6 BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; bash update-pages.sh" && bash -l -c "cd /home/ubuntu/spase-generate-pages; bash push-pages.sh"
+# Every Sunday refresh the whole thing to delete old file names
+10 0 * * Sun BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; bash generate-all-pages.sh" && bash -l -c "cd /home/ubuntu/spase-generate-pages; bash push-pages.sh"
 # Clean out landing pages for deleted and renamed descriptor files
-55 * * * * BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; /usr/bin/php /home/ubuntu/spase-generate-pages/prune_pages.php >> /tmp/prune.out" && bash -l -c "cd /home/ubuntu/spase-generate-pages; cp -r metadata.src/NASA /home/ubuntu; cp -r metadata.src/SMWG /home/ubuntu; bash push-pages.sh"
-20 * * * * curl https://spase-metadata.org/naming_auths.json > /home/ubuntu/spase-generate-pages/naming_auths.json
+55 * * * 1-6 BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "cd /home/ubuntu/spase-generate-pages; /usr/bin/php /home/ubuntu/spase-generate-pages/prune_pages.php >> /tmp/prune.out" && bash -l -c "cd /home/ubuntu/spase-generate-pages; rm -rf /home/ubuntu/NASA; cp -r ./metadata.src/NASA/. /home/ubuntu/NASA/ >> /home/ubuntu/tmp/cronjob.log 2>&1; rm -rf /home/ubuntu/SMWG; cp -r ./metadata.src/SMWG/. /home/ubuntu/SMWG/ >> /home/ubuntu/tmp/cronjob.log 2>&1; bash push-pages.sh"
+20 * * * 1-6 curl https://spase-metadata.org/naming_auths.json > /home/ubuntu/spase-generate-pages/naming_auths.json
 # Perform schema validation
-#0 2 * * 6 BASH_ENV=/etc/profile bash -l -c "bash validate.sh"
 0 2 * * Sat BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "bash validate.sh"
 # Perform ID referential check
 0 3 * * Sat BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "bash refcheck-id.sh"
 # Perform URL referential check
 0 4 * * Sat BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt bash -l -c "bash refcheck-url.sh"
 # Perform full github naming authority pull including cloning of new repositories
-5 0 * * * BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt /usr/bin/php /home/ubuntu/spase-generate-pages/clone_new.php
+5 0 * * 1-6 BASH_ENV=/home/ubuntu/spase-generate-pages/path.txt /usr/bin/php /home/ubuntu/spase-generate-pages/clone_new.php
 #
 #
 # SPASE Backups (to s3 bucket)
