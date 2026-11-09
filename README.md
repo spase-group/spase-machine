@@ -28,12 +28,16 @@ Setup a Ubuntu EC2 instance using <a href="https://portal.hsdcloud.org/" target=
 
 ## Installation
 1. Clone all the above repositories by downloading and running the clone_repos.sh script: 
-    - `wget https://github.com/spase-group/spase-machine/blob/main/clone_repos.sh` followed by `bash clone_repos.sh`.
-2. Download the crontab.job and package-lock.json files to the same location on your machine where these repos were cloned.
-    - `wget https://github.com/spase-group/spase-machine/blob/main/crontab.job`
-    - `wget https://github.com/spase-group/spase-machine/blob/main/package-lock.json`
-3. Install necessary Node packages from the package-lock.json file using the `npm ci` command.
-4. Install Python 3.8 or later
+    - `wget https://raw.githubusercontent.com/spase-group/spase-machine/refs/heads/main/clone_repos.sh` followed by `bash clone_repos.sh`.
+2. Download the crontab.job, package.json and package-lock.json files to the same location on your machine where these repos were cloned.
+    - `wget https://raw.githubusercontent.com/spase-group/spase-machine/refs/heads/main/crontab.job`
+    - `wget https://raw.githubusercontent.com/spase-group/spase-machine/refs/heads/main/package-lock.json`
+    - `wget https://raw.githubusercontent.com/spase-group/spase-machine/refs/heads/main/package.json`
+3. Install node v18 (a no longer supported version but the SPASE scripts require now deprecated packages to be used for the time being -- will be refactored in the future) system-wide (so can use apt) via the modern setup script.
+    - `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -`
+    - `sudo apt-get install -y nodejs`
+4. Install necessary Node packages from the package-lock.json file using the `npm ci` command.
+5. Install Python 3.8 or later
     - `sudo apt update && sudo apt upgrade -y`
     - `sudo apt install python3 python3-pip python3-venv python3-dev -y`
 
