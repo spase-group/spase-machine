@@ -6,7 +6,7 @@ Instructions for setting up the main SMWT-IHDEA machine.
 
 The machine contains several repositories and miscellaneous files related to certain tasks:
 ### Needed for everything
-- Overall ubuntu environment package-lock.json
+- Overall ubuntu environment package-lock.json and package.json
 - The <a href="https://github.com/spase-group/spase-scripts" target="_blank">spase-scripts</a> repo
 
 ### Generating the landing pages and backing up all SPASE records to the cloud.
@@ -23,7 +23,7 @@ The machine contains several repositories and miscellaneous files related to cer
 - The <a href="https://github.com/spase-group/spase-model-tools-node" target="_blank">spase-model-tools-node</a> repo
 
 ## Prerequisites
-Setup a Ubuntu EC2 instance using <a href="https://portal.hsdcloud.org/" target="_blank">HelioCloud's Daskhub</a> with size >= "m5a.2xlarge", along with a matching key pair. Then, follow the instructions provided to SSH into the machine.
+Setup a Ubuntu EC2 instance using <a href="https://portal.hsdcloud.org/" target="_blank">HelioCloud's Daskhub</a> with size >= "m5a.2xlarge" and >8 GB, along with a matching key pair. Then, follow the instructions provided to SSH into the machine.
 
 
 ## Installation
