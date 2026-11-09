@@ -37,6 +37,7 @@ Setup a Ubuntu EC2 instance using <a href="https://portal.hsdcloud.org/" target=
     - `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -`
     - `sudo apt-get install -y nodejs`
 4. Install necessary Node packages from the package-lock.json file using the `npm ci` command.
+    - If you run into errors due to minor version differences between v18.x and v18.y, run `npm install --no-audit` to have the package.json match package-lock.json and the rerun the above.
 5. Install Python 3.8 or later
     - `sudo apt update && sudo apt upgrade -y`
     - `sudo apt install python3 python3-pip python3-venv python3-dev -y`
